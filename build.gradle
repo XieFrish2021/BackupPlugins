@@ -1,0 +1,54 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.9.22'
+}
+
+group = 'xyz.frish2021'
+version = '1.0-SNAPSHOT'
+def debug = false
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+
+    maven {
+        name 'Spigot-oss'
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+
+    maven {
+        name 'Spigot-hub'
+        url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+}
+
+dependencies {
+    compileOnly('org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT')
+
+    implementation('commons-io:commons-io:2.10.0')
+    implementation('org.apache.commons:commons-compress:1.18')
+}
+
+
+tasks.withType(Jar).configureEach {
+    if (debug) {
+        destinationDir(new File(this.rootDir, "run/plugins"))
+    } else {
+        destinationDir(new File(this.rootDir, "target"))
+    }
+
+    from {
+        configurations.compileClasspath.findAll {
+            !(it.name.contains("spigot-api-1.12.2-R0.1-SNAPSHOT.jar") ||
+                    it.name.contains("commons-lang-2.6.jar") ||
+                    it.name.contains("json-simple-1.1.1.jar") ||
+                    it.name.contains("bungeecord-chat-1.12-SNAPSHOT.jar") ||
+                    it.name.contains("guava-21.0.jar") ||
+                    it.name.contains("gson-2.8.0.jar") ||
+                    it.name.contains("snakeyaml-1.19.jar") ||
+                    it.name.contains("junit-4.10.jar") ||
+                    it.name.contains("hamcrest-core-1.1.jar"))
+        }.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}

@@ -1,0 +1,11 @@
+name: BackupPlugins
+version: 1.0.0
+main: xyz.frish2021.backupPlugins.BackupPlugins
+description: The Server World Backup Plugins
+website: www.sunmoonbay.top
+authors:
+  - "Frish2021"
+
+commands:
+  backup:
+    description: "The Backup Plugins Main Command (:"

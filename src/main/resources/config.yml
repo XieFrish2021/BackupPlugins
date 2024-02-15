@@ -1,0 +1,12 @@
+#language setting
+# 语言设置
+language: zh_CN
+
+# time format setting
+# 时间格式设置
+time-format: yyyy-MM-dd-HH-mm-ss
+
+# BackupFile name setting
+# 备份文件名字设置
+# ${time} - 代指时间
+BackupFile-name: "backup-${time}"
